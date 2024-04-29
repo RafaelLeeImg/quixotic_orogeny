@@ -1,4 +1,5 @@
-# README
+# Description
+An operating system runs on Cortex-M micro controllers.
 
 
 MCU: STM32F405RET6

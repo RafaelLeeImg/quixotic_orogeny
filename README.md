@@ -1,9 +1,21 @@
 # Description
-An operating system runs on Cortex-M micro controllers.
+An operating system runs on Cortex-M micro controllers.  
 
 
-MCU: STM32F405RET6
-schematic: https://www.olimex.com/Products/ARM/ST/STM32-H405/resources/STM32-H405_sch.pdf
+## Plan:
+1, run fully on emulator first  
+1, reset handler and vector table  
+1, implement USART I/O output, for debugging purpose  
+1, implement minimal memory management  
+1, data types  
+1, implement atomic operations  
+1, multi tasking  
+1, inter process communication  
+1, implement a minimal C standard library function.  
+
+## hardware
+MCU: STM32F405RET6  
+schematic: https://www.olimex.com/Products/ARM/ST/STM32-H405/resources/STM32-H405_sch.pdf  
 
 
 # emulate
@@ -21,4 +33,3 @@ qemu-system-arm \
     --semihosting-config enable=on,target=native \
     -kernel /dev/shm/d/proj/libopencm3-examples/examples/stm32/f4/olimex_stm32_h405/usart/usart.elf
 ```
-

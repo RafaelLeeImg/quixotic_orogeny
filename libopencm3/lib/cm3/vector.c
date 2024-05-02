@@ -38,8 +38,6 @@ extern funcp_t __preinit_array_start, __preinit_array_end;
 extern funcp_t __init_array_start, __init_array_end;
 extern funcp_t __fini_array_start, __fini_array_end;
 
-int main(void);
-
 void blocking_handler(void) {
   while (1)
     ;
@@ -227,6 +225,11 @@ vector_table_t vector_table = {.initial_sp_value = &_stack,
                                .systick = sys_tick_handler,
                                .irq = {IRQ_HANDLERS}};
 
+static void pre_main(void) {
+  /* Enable access to Floating-Point coprocessor. */
+  SCB_CPACR |= SCB_CPACR_FULL * (SCB_CPACR_CP10 | SCB_CPACR_CP11);
+}
+
 void __attribute__((weak)) reset_handler(void) {
   volatile unsigned *src, *dest;
   funcp_t *fp;
@@ -262,3 +265,14 @@ void __attribute__((weak)) reset_handler(void) {
     (*fp)();
   }
 }
+
+void nmi_handler(void) __attribute__((weak, alias("blocking_handler")));
+void hard_fault_handler(void) __attribute__((weak, alias("blocking_handler")));
+void mem_manage_handler(void) __attribute__((weak, alias("blocking_handler")));
+void bus_fault_handler(void) __attribute__((weak, alias("blocking_handler")));
+void usage_fault_handler(void) __attribute__((weak, alias("blocking_handler")));
+void sv_call_handler(void) __attribute__((weak, alias("blocking_handler")));
+void debug_monitor_handler(void)
+    __attribute__((weak, alias("blocking_handler")));
+void pend_sv_handler(void) __attribute__((weak, alias("blocking_handler")));
+void sys_tick_handler(void) __attribute__((weak, alias("blocking_handler")));

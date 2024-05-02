@@ -60,8 +60,7 @@ LIB := #-lc -lm
 
 # ********** LDFLAGS **********
 # link script
-# LDSCRIPT = -T
-LDSCRIPT :=
+LDSCRIPT := -TSTM32F405RET6.ld
 
 # -Wl,(XX) means send xx to linker
 # -Wl,--gc-sections means send --gc-sections to linker
@@ -71,6 +70,7 @@ LDSCRIPT :=
 LDFLAGS := $(MCU) $(LDSCRIPT) $(INC) $(LIB) $(STARTUP_DEFS) $(OVERALL_FLAGS) \
 	-std=c99 \
 	--static \
+	-nostartfiles \
 	--specs=rdimon.specs \
 	-Wl,-Map=usart.map -Wl,--cref -Wl,--gc-sections \
 	-Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group \

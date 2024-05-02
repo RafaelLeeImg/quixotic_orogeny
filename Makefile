@@ -1,5 +1,5 @@
 CCACHE := ccache
-PREFIX :=
+PREFIX := arm-none-eabi-
 
 CC := $(CCACHE) $(PREFIX)gcc
 CXX := $(CCACHE) $(PREFIX)g++
@@ -12,10 +12,10 @@ SZ := $(CCACHE) $(PREFIX)size
 DEBUG := 1
 
 # https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html
-SANITIZER := -fsanitize=address -fsanitize=undefined
-COVERAGE := -fprofile-arcs -ftest-coverage
-PROFILING := -pg
-OPTIMIZE := -Og
+SANITIZER := #-fsanitize=address -fsanitize=undefined
+COVERAGE := # -fprofile-arcs -ftest-coverage
+PROFILING := # -pg
+OPTIMIZE := -Og # -Os
 SHORTER_ERROR := -Wfatal-errors
 
 OVERALL_FLAGS := -fdata-sections -ffunction-sections $(SANITIZER) $(COVERAGE) $(PROFILING) $(OPTIMIZE) $(SHORTER_ERROR)
@@ -23,9 +23,19 @@ OVERALL_FLAGS := -fdata-sections -ffunction-sections $(SANITIZER) $(COVERAGE) $(
 # assembly flags
 ASFLAGS :=
 
+MCU := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+
 # C flags
 # with all warnings, with extra warnings
-CFLAGS := -Wall -Wextra -std=c99
+CFLAGS := \
+	-std=c99 \
+	--specs=rdimon.specs \
+	-Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes \
+	-fno-common -ffunction-sections -fdata-sections \
+
+# -MD \
+# -MM -MD
+
 
 # C preprocess flags
 # CPPFLAGS := -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"
@@ -46,7 +56,7 @@ OBJ := build
 COVERAGE_DIR := coverage
 
 # libraries
-LIB := -lc -lm
+LIB := #-lc -lm
 
 # ********** LDFLAGS **********
 # link script
@@ -59,6 +69,11 @@ LDSCRIPT :=
 # LDFLAGS := -Wl,--gc-sections -g -Wall --specs=nosys.specs # -specs=nano.specs
 # --cref create reference table
 LDFLAGS := $(MCU) $(LDSCRIPT) $(INC) $(LIB) $(STARTUP_DEFS) $(OVERALL_FLAGS) \
+	-std=c99 \
+	--static \
+	--specs=rdimon.specs \
+	-Wl,-Map=usart.map -Wl,--cref -Wl,--gc-sections \
+	-Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group \
 	-Wl,-Map=$(OBJ)/$(TARGET).map,--cref,--gc-sections,--print-memory-usage
 
 # -specs=nano.specs -fdata-sections -ffunction-sections

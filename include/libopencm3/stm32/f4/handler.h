@@ -1,7 +1,6 @@
 // handler.h
-
-#TODO:
-typedef unsigned char uint8_t;
+#include "stdint.h"
+// TODO:
 
 void nvic_enable_irq(uint8_t irqn);
 void nvic_disable_irq(uint8_t irqn);

@@ -31,5 +31,5 @@ qemu-system-arm \
     -monitor null \
     -semihosting \
     --semihosting-config enable=on,target=native \
-    -kernel /dev/shm/d/proj/libopencm3-examples/examples/stm32/f4/olimex_stm32_h405/usart/usart.elf
+    -kernel build/main.elf
 ```

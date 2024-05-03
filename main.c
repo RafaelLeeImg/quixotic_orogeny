@@ -1,6 +1,7 @@
 #include "console.h"
 #include "hardware_clock.h"
 #include "hardware_gpio.h"
+#include "hardware_systick.h"
 #include "hardware_usart.h"
 #include "string.h"
 
@@ -22,6 +23,10 @@ int main(void) {
   usart_setup();
   print(hello_world);
   systick_setup();
+
+  cm_enable_interrupts();
+
+  cm_enable_faults();
 
   for (int j = 0; j < 3000; j++) {
     ;

@@ -5,6 +5,13 @@
 #include "string.h"
 
 #define MAX_STRING_LEN 4096
+
+void print(char const str[]) {
+  for (size_t i = 0; i < strnlen(str, MAX_STRING_LEN) / sizeof(char); i++) {
+    *USART1_DR = str[i];
+  }
+}
+
 int main(void) {
 
   char hello_world[] = "Hello World!\n";
@@ -13,11 +20,7 @@ int main(void) {
   clock_setup();
   gpio_setup();
   usart_setup();
-
-  for (size_t i = 0; i < strnlen(hello_world, MAX_STRING_LEN) / sizeof(char);
-       i++) {
-    *USART1_DR = hello_world[i];
-  }
+  print(hello_world);
 
   for (int j = 0; j < 3000; j++) {
     ;

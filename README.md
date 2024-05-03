@@ -4,6 +4,7 @@ An operating system runs on Cortex-M micro controllers.
 
 ## Plan:
 1, run fully on emulator first  
+1, logging system, through rdimon  
 1, reset handler and vector table  
 1, implement USART I/O output, for debugging purpose  
 1, implement minimal memory management  

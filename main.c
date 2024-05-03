@@ -14,7 +14,7 @@ int main(void) {
   gpio_setup();
   usart_setup();
 
-  for (int i = 0; i < strnlen(hello_world, MAX_STRING_LEN) / sizeof(char);
+  for (size_t i = 0; i < strnlen(hello_world, MAX_STRING_LEN) / sizeof(char);
        i++) {
     *USART1_DR = hello_world[i];
     for (int j = 0; j < 30; j++) {

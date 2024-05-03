@@ -7,7 +7,7 @@
 #define MAX_STRING_LEN 4096
 int main(void) {
 
-  char *hello_world = "Hello World!\n";
+  char hello_world[] = "Hello World!\n";
   // char *hello_world = "World!\n";
 
   clock_setup();

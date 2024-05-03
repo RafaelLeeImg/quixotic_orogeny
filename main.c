@@ -17,9 +17,6 @@ int main(void) {
   for (size_t i = 0; i < strnlen(hello_world, MAX_STRING_LEN) / sizeof(char);
        i++) {
     *USART1_DR = hello_world[i];
-    for (int j = 0; j < 30; j++) {
-      ;
-    }
   }
 
   for (int j = 0; j < 3000; j++) {

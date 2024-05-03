@@ -21,6 +21,7 @@ int main(void) {
   gpio_setup();
   usart_setup();
   print(hello_world);
+  systick_setup();
 
   for (int j = 0; j < 3000; j++) {
     ;

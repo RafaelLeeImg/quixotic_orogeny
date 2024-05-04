@@ -11,6 +11,10 @@ SZ := $(CCACHE) $(PREFIX)size
 
 DEBUG := 1
 
+ifndef V
+.SILENT:
+endif
+
 # https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html
 SANITIZER := #-fsanitize=address -fsanitize=undefined
 COVERAGE := # -fprofile-arcs -ftest-coverage

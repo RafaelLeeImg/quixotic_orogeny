@@ -38,7 +38,7 @@ void printf_int(char str[], size_t start, size_t end, int number) {
 
   do {
     if (unlikely(number == -2147483648)) {
-      buf1 = &minus_2_pow_31;
+      buf1 = &(minus_2_pow_31[0]);
       break;
     } else if (number < 0) {
       number = -1 * number;
@@ -88,7 +88,7 @@ void printf_hex(char str[], size_t start, size_t end, unsigned int number) {
   do {
     for (; number > 0; ptr++) {
       // printf("%d",number%16);
-      int remainder = number % 16;
+      unsigned int remainder = number % 16;
       // 'W' = 'a' - 10
       buf0[ptr] = remainder >= 10 ? remainder + 'W' : remainder + '0';
       number /= 16;

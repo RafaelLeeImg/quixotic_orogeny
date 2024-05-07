@@ -3,4 +3,6 @@ build/*
 *.a
 *.map
 *.elf
+main
+olimex_STM32-H405_sch.pdf*
 

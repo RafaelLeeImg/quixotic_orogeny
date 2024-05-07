@@ -105,7 +105,7 @@ void printf_hex(char str[], size_t start, size_t end, unsigned int number) {
 }
 
 // void printf(char str[], ...) {
-int printf(const char *restrict str, ...) {
+int printf_not_used(const char *restrict str, ...) {
   size_t len = strnlen(str, MAX_STRING_LEN);
   // printf("len = %d\n", len);
   size_t arg_count = 0;

@@ -148,10 +148,10 @@ $(OBJ)/%.elf: $(all_o_files) | $(OBJ)
 	$(LD) $(all_o_files) $(LDFLAGS) -o $@
 
 $(OBJ)/%.hex: $(OBJ)/%.elf
-	$(HEX) $< $@
+	$(CP) -O ihex $< $@
 
 $(OBJ)/%.bin: $(OBJ)/%.elf
-	$(BIN) $< $@
+	$(CP) -O binary $< $@
 
 
 # $@ target

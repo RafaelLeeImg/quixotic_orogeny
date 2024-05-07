@@ -13,6 +13,14 @@ void printf_int(char str[], size_t start, size_t end, int number);
 void printf_hex(char str[], size_t start, size_t end, unsigned int number);
 void printf_str(char str[], size_t start, size_t end, char *input);
 
+int _write(int file, char *data, int len) {
+  (void)file;
+  for (int i = 0; i < len; i++) {
+    *USART1_DR = (data[i]) % 256;
+  }
+  return len;
+}
+
 // TODO: fix print 2147483648 ~ 4294967295
 // print format like %03d
 void printf_int(char str[], size_t start, size_t end, int number) {

@@ -136,7 +136,7 @@ int printf(const char *restrict str, ...) {
           break;
         case 'D':
         case 'd': {
-          int *number = va_arg(arg_ptr, int *);
+          int number = va_arg(arg_ptr, int);
           // printf("number = %d\n", number);
           // printf("||start = %d, i = %d, j = %d, number = %d\n", start, i, j,
           // number); // debug
@@ -151,7 +151,7 @@ int printf(const char *restrict str, ...) {
           break;
         case 'X':
         case 'x': {
-          int *number = va_arg(arg_ptr, int *);
+          int number = va_arg(arg_ptr, int);
           printf_hex(str, start, j + 1, number);
           j--;
           i--;

@@ -11,6 +11,7 @@ typedef char *va_list;
 
 void printf_int(char str[], size_t start, size_t end, int number);
 void printf_hex(char str[], size_t start, size_t end, unsigned int number);
+void printf_str(char str[], size_t start, size_t end, char *input);
 
 // TODO: fix print 2147483648 ~ 4294967295
 // print format like %03d
@@ -101,6 +102,14 @@ void printf_hex(char str[], size_t start, size_t end, unsigned int number) {
   size_t len = strnlen(buf1, MAX_STRING_LEN);
   for (size_t i = 0; i < len; i++) {
     *USART1_DR = buf1[i];
+  }
+}
+
+// TODO: not tested, not verified
+void printf_str(char str[], size_t start, size_t end, char *input) {
+  size_t len = strnlen(str, MAX_STRING_LEN);
+  for (size_t i = 0; i < len; i++) {
+    *USART1_DR = input[i];
   }
 }
 

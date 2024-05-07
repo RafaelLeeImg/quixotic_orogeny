@@ -3,6 +3,8 @@
 
 #include "stdint.h"
 
+#define MAX_STRING_LEN 4096
+
 size_t strnlen(const char s[], size_t maxlen);
 // size_t strnlen();
 

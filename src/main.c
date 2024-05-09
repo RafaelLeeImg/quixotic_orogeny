@@ -6,7 +6,6 @@
 #include "pthread.h"
 #include "stdio.h"
 #include "string.h"
-#include "sys/types.h"
 // #include <stdarg.h>
 
 #define MAX_STRING_LEN 4096
@@ -14,6 +13,8 @@ void print(char const str[]);
 void test(void);
 void cm_enable_interrupts(void);
 void cm_enable_faults(void);
+
+void print(char const str[]);
 
 void print(char const str[]) {
   for (size_t i = 0; i < strnlen(str, MAX_STRING_LEN) / sizeof(char); i++) {
@@ -40,8 +41,10 @@ int main(void) {
   test();
   systick_setup();
 
+  printf("cm_enable_interrupts\n");
   cm_enable_interrupts();
 
+  printf("cm_enable_faults\n");
   cm_enable_faults();
 
   printf("console_setup\n");
@@ -78,12 +81,6 @@ int main(void) {
   }
 
   for (int j = 0; j < 3000; j++) {
-    ;
-  }
-
-  console_setup();
-
-  while (1) {
     ;
   }
 

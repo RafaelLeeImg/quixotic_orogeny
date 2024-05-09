@@ -62,3 +62,6 @@ try lock lock1 again at 300 sys tick.
 Typedef:va_list  
 Base type:struct __va_list { void *__ap; }  
 Notes:A va_list may address any object in a parameter list. Consequently, the first object addressed may only have word alignment (all objects are at least word aligned), but any double- word aligned object will appear at the correct double-word alignment in memory. In C++, __va_list is in namespace std.  
+
+The first 4 bytes in flash memory are the initial value of stack pointer.
+The second 4 bytes in flash memory are the initial value of program counter.

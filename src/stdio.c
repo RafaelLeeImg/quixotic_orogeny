@@ -1,10 +1,8 @@
 #include "stdio.h"
 #include "hardware_usart.h"
+#include "stdarg.h"
 #include "stdint.h"
 #include "string.h"
-#include <stdarg.h>
-
-typedef char *va_list;
 
 #define likely(x) __builtin_expect(!!(x), 1)
 #define unlikely(x) __builtin_expect(!!(x), 0)
@@ -86,7 +84,6 @@ void printf_hex(const char str[], size_t start, size_t end,
   char buf0[9] = {0}; // -0x7FFFFFFF ~ 0xFFFFFFFF, length of 0x not count
   char buf1_arr[9] = {0};
   char *buf1 = buf1_arr;
-  int less_than_zero = 0;
 
   // debug
   // printf("printf_int,");
@@ -153,6 +150,12 @@ int printf_not_used(const char *restrict str, ...) {
         case 'c':
           break;
         case 's':
+          // char *input = va_arg(arg_ptr, char *);
+          // printf_str(str, start, j + 1, ((char*)arg_ptr)+4);
+          // printf_str(str, start, j + 1, input);
+          // j--;
+          // i--;
+          // stop_for = 1;
           break;
         case 'D':
         case 'd': {

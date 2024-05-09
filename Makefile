@@ -19,10 +19,10 @@ endif
 SANITIZER := #-fsanitize=address -fsanitize=undefined
 COVERAGE := # -fprofile-arcs -ftest-coverage
 PROFILING := # -pg
-OPTIMIZE := -Og # -Os
+OPTIMIZE := -O0 -Og # -Os
 SHORTER_ERROR := -Wfatal-errors
 
-OVERALL_FLAGS := -fdata-sections -ffunction-sections $(SANITIZER) $(COVERAGE) $(PROFILING) $(OPTIMIZE) $(SHORTER_ERROR)
+OVERALL_FLAGS := -fdiagnostics-color=always -fdata-sections -ffunction-sections $(SANITIZER) $(COVERAGE) $(PROFILING) $(OPTIMIZE) $(SHORTER_ERROR)
 
 # assembly flags
 ASFLAGS :=
@@ -68,6 +68,18 @@ LIB := #-lc -lm
 # ********** LDFLAGS **********
 # link script
 LDSCRIPT := -TSTM32F405RET6.ld
+
+# # compile, libopencm3
+# arm-none-eabi-gcc -Os -std=c99 -ggdb3 -mthumb -mcpu=cortex-m4 --specs=rdimon.specs -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Wextra -Wshadow -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -fno-common -ffunction-sections -fdata-sections -g -Og  -MD -Wall -Wundef -DSTM32F4 -I../../../../../libopencm3//include  -o usart.o -c usart.c
+# # link, libopencm3
+# arm-none-eabi-gcc --static -nostartfiles -T../stm32f4-discovery.ld -mthumb -mcpu=cortex-m4 --specs=rdimon.specs -mfloat-abi=hard -mfpu=fpv4-sp-d16 -ggdb3 -Wl,-Map=usart.map -Wl,--cref -Wl,--gc-sections -g -Og -L../../../../../libopencm3//lib usart.o -lopencm3_stm32f4 -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group -o usart.elf
+
+# # current linking command of this makefile
+# ccache arm-none-eabi-gcc build/vector.c.o build/vector_nvic.c.o build/main.c.o build/reset_handler.c.o -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -TSTM32F405RET6.ld -I/dev/shm/d/proj/quixotic_orogeny/ -Iinclude   -fdata-sections -ffunction-sections    -Og  -Wfatal-errors -std=c99 --static --specs=rdimon.specs -Wl,-Map=usart.map -Wl,--cref -Wl,--gc-sections -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group -Wl,-Map=build/main.map,--cref,--gc-sections,--print-memory-usage -g -gdwarf-2 -o build/main.elf
+
+# # current hand writing:
+# arm-none-eabi-gcc --static -nostartfiles -TSTM32F405RET6.ld -mthumb -mcpu=cortex-m4 --specs=rdimon.specs -mfloat-abi=hard -mfpu=fpv4-sp-d16 -ggdb3 -Wl,-Map=main.map -Wl,--cref -Wl,--gc-sections -g -Og -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group build/vector.c.o build/vector_nvic.c.o build/main.c.o build/reset_handler.c.o -o build/main.elf
+
 
 # -Wl,(XX) means send xx to linker
 # -Wl,--gc-sections means send --gc-sections to linker

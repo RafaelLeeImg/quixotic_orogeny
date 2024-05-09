@@ -1,0 +1,16 @@
+e anal.arch=arm
+e anal.armthumb=true
+e dbg.bpinmaps=false
+
+# show more info of disassamble
+# e asm.describe=1
+
+
+aaa
+afl
+
+db sym.main
+db sym.printf
+# db stdio.c:152
+db 0x080005ae
+# │ ─────└──> 0x080005ae      02f10409       add.w sb, r2, 4             ; stdio.c:152           int number = va_arg(arg_ptr, int);

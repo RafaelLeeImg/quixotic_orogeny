@@ -8,20 +8,19 @@ target remote localhost:1234
 
 
 
-# GEF SETUP
-# gef config context.layout "-args source threads trace extra -memory"
-gef config context.layout "-regs -stack code -args source -threads -trace -extra -memory"
-
-gef config context.nb_lines_code 12
-
-layout split
-tui disable
-# GEF SETUP, END
+# # GEF setup          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# # gef config context.layout "-args source threads trace extra -memory"
+# gef config context.layout "-regs -stack code -args source -threads -trace -extra -memory"
+# gef config context.nb_lines_code 12
+# layout split
+# tui disable
+# # GEF setup, END     vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 
 # b sys_tick_handler
 b main
-b main.c:52
+c
+b main.c:67
 # b stdio.c:157
 # b stdio.c:169
 
@@ -32,5 +31,10 @@ b main.c:52
 # p/x arg_ptr
 # x/32x arg_ptr-12
 
-p "number = "
-p number
+# p "number = "
+# p number
+# b interrupt.c:24
+# c
+
+# b 16
+# c

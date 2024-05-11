@@ -24,7 +24,7 @@ int pthread_spin_destroy(pthread_spinlock_t *lock) { return 0; }
 // ENOMEM Insufficient memory to initialize the spin lock.
 // TODO: implement EAGAIN, ENOMEM when error
 int pthread_spin_init(pthread_spinlock_t *lock, int pshared) {
-  lock->slock = 0;
+  lock->locked_ = 0;
 
   return 0;
   // return EAGAIN;
@@ -39,9 +39,9 @@ int pthread_spin_lock(pthread_spinlock_t *lock) {
 }
 
 int pthread_spin_trylock(pthread_spinlock_t *lock) {
-  unsigned int status = __ldrex(&(lock->slock));
+  unsigned int status = __ldrex(&(lock->locked_));
   if (status == 0) {
-    status = __strex(1, &(lock->slock)); // lock
+    status = __strex(1, &(lock->locked_)); // lock
     __dmb();
     return 0; // success
   }
@@ -52,7 +52,7 @@ int pthread_spin_unlock(pthread_spinlock_t *lock) {
   __dmb();
 
   /* Free the lock. */
-  lock->slock = 0;
+  lock->locked_ = 0;
 
   return 0;
   // return EDEADLOCK

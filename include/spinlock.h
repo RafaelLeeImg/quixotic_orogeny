@@ -8,7 +8,7 @@ uint32_t __strex(uint32_t val, volatile uint32_t *addr);
 void __clrex(void);
 
 typedef struct pthread_spinlock {
-  volatile unsigned int slock;
+  volatile unsigned int locked_;
 } pthread_spinlock_t;
 
 // POSIX, IEEE Std 1003.1-2017

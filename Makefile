@@ -222,10 +222,10 @@ $(OBJ)/%.s.o: %.s $(OBJ)/%.s.d | $(OBJ)
 
 # A phony target is one that is not really the name of a file
 clean:
-	rm -f ./$(TARGET)
-	rm -r ./$(OBJ)/*
-	rm -r ./$(COVERAGE_DIR)/*
-	rm -r ./gmon.out
+	rm -rf ./$(TARGET)
+	rm -rf ./$(OBJ)/*
+	rm -rf ./$(COVERAGE_DIR)/*
+	rm -rf ./gmon.out
 
 
 

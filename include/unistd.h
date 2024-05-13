@@ -4,4 +4,3 @@
 unsigned sleep(unsigned seconds);
 
 #endif /* __UNISTD_H__ */
-

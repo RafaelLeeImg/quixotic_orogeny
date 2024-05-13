@@ -1,0 +1,1 @@
+unsigned sleep(unsigned seconds) {}

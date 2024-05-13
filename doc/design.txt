@@ -170,3 +170,36 @@ Certainly! Here's a list of approximately 100 POSIX APIs that are commonly used 
 
 # name
 quixotic_orogeny
+
+
+## scheduler
+
+There are several types of schedulers used in operating systems, each designed to meet different performance goals and requirements. The main types of schedulers include:
+
+First-Come, First-Served (FCFS): This is one of the simplest scheduling algorithms, where processes are executed in the order they arrive. It is non-preemptive and does not prioritize processes based on their characteristics.
+
+Shortest Job Next (SJN) or Shortest Job First (SJF): This algorithm selects the process with the shortest burst time next for execution. It can be either preemptive (Shortest Remaining Time First - SRTF) or non-preemptive.
+
+Priority Scheduling: Processes are assigned priorities, and the scheduler selects the process with the highest priority for execution. It can be either preemptive or non-preemptive. There are variants like static priority scheduling and dynamic priority scheduling.
+
+Round Robin (RR): In this algorithm, each process is assigned a fixed time slice (quantum) for execution. If a process does not finish within its time slice, it is preempted, and the CPU is given to the next process in the queue.
+
+Multi-Level Queue (MLQ): This scheduler organizes processes into multiple queues based on their priority or other characteristics. Each queue may have its own scheduling algorithm (e.g., FCFS, RR), and processes move between queues based on predefined criteria.
+
+Multi-Level Feedback Queue (MLFQ): This is an extension of the MLQ scheduler where processes can move between queues dynamically based on their behavior and resource requirements. Aging is used to prevent starvation of low-priority processes.
+
+Fair-Share Scheduling: This scheduler ensures that system resources are distributed fairly among users or groups based on predefined shares or weights assigned to them.
+
+Deadline Scheduling: Processes are assigned deadlines, and the scheduler ensures that they are completed within their deadlines. Real-time operating systems often use this scheduler to guarantee timely execution of critical tasks.
+
+Earliest Deadline First (EDF): This is a real-time scheduling algorithm where processes are scheduled based on their absolute deadlines. The process with the earliest deadline is scheduled next.
+
+Weighted Fair Queuing (WFQ): This is a network scheduler that ensures fair allocation of bandwidth among network flows based on their weights or priorities.
+
+These are some of the commonly used scheduling algorithms and techniques in operating systems. Each scheduler has its advantages, disadvantages, and suitability for different types of workloads and system requirements. Operating systems may use a combination of these schedulers or employ sophisticated scheduling policies to optimize resource utilization, responsiveness, and fairness.
+
+
+
+## processes
+Only the memory of stack needs to be considered, heap are all in main memory region.
+

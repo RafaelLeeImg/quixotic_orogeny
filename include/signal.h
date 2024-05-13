@@ -43,4 +43,12 @@
 #define SIGRTMAX (__libc_current_sigrtmax())
 #define RTSIG_MAX (SIGRTMAX - SIGRTMIN + 1)
 
+typedef struct {
+  int sigev_notify;                            // Notification type.
+  int sigev_signo;                             // Signal number.
+  union sigval sigev_value;                    // Signal value.
+  void (*sigev_notify_function)(union sigval); // Notification function.
+  pthread_attr_t *sigev_notify_attributes;     // Notification attributes.
+} sigevent;
+
 #endif /* __SIGNAL_H__ */

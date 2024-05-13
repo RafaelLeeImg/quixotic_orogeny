@@ -6,6 +6,7 @@
 #include "pthread.h"
 #include "stdio.h"
 #include "string.h"
+#include "sys/types.h"
 // #include <stdarg.h>
 
 #define MAX_STRING_LEN 4096
@@ -24,6 +25,10 @@ void print(char const str[]) {
 
 pthread_mutex_t lock1;
 extern volatile unsigned int systick_cnt;
+
+void process_1(void) {}
+
+void process_2(void) {}
 
 int main(void) {
 

@@ -51,9 +51,7 @@ typedef struct pthread_spinlock {
   volatile unsigned int locked_;
 } pthread_spinlock_t;
 
-typedef struct {
-  unsigned int pid;
-} pthread_t;
+typedef unsigned int pthread_t;
 
 typedef struct {
   pthread_spinlock_t guard_;

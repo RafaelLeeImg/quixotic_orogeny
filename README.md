@@ -8,10 +8,11 @@ An operating system runs on Cortex-M micro controllers.
 1, reset handler and vector table  ... Done  
 1, implement USART I/O output, for debugging purpose  ... Done  
 1, implement systick timer  ... Done  
-1, implement atomic operations  
-1, implement minimal memory management  
+1, implement atomic operations  ... Done  
 1, data types  
+1, sleep  
 1, multi tasking  
+1, implement minimal memory management  
 1, inter process communication  
 1, implement a minimal C standard library function.  
 

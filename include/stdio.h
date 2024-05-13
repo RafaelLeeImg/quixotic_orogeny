@@ -1,6 +1,7 @@
 #ifndef __STDIO_H__
 #define __STDIO_H__
 #include "stdint.h"
+#include "sys/types.h"
 
 int printf(const char *restrict format, ...);
 // int fprintf(FILE *restrict stream, const char *restrict format, ...);

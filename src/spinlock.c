@@ -1,4 +1,4 @@
-#include "spinlock.h"
+#include "pthread.h"
 #include "stdint.h"
 
 /* DMB is supported on CM0 */

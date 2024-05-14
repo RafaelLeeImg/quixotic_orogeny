@@ -1,7 +1,5 @@
-#include "mutex.h"
 #include "errno.h"
 #include "pthread.h"
-#include "spinlock.h"
 
 // extern int errno;
 

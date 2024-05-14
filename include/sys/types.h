@@ -1,5 +1,6 @@
 #ifndef __SYS_TYPES_H__
 #define __SYS_TYPES_H__
+#include "sched.h"
 #include "stdint.h"
 
 #define _POSIX_SSIZE_MAX 32767
@@ -11,9 +12,16 @@ typedef int ssize_t;
 
 typedef int blkcnt_t;
 typedef int blksize_t;
-#define clock_t not_defined // int or float
+typedef int clock_t;
 
 #define clockid_t not_defined
+// POSIX Headers <time.h>
+// CLOCKS_PER_SEC A number used to convert the value returned by the clock( )
+// function into seconds. The value shall be an expression with type clock_t.
+// The value of CLOCKS_PER_SEC shall be 1 million on XSI-conformant systems.
+// However, it may be variable on other systems, and it should not be assumed
+// that CLOCKS_PER_SEC is a compile-time constant.
+
 typedef int dev_t;
 typedef unsigned int fsblkcnt_t;
 typedef unsigned int fsfilcnt_t;
@@ -27,8 +35,16 @@ typedef int nlink_t;
 typedef int off_t; // signed
 typedef int pid_t; // signed
 
+// defined according to POSIX Headers <sched.h>
 typedef struct {
-  int a;
+  int detachstate;
+  size_t guardsize;
+  int inheritsched;
+  struct sched_param schedparam;
+  int schedpolicy;
+  int scope;
+  void *stackaddr;
+  size_t stacksize;
 } pthread_attr_t;
 
 typedef struct {

@@ -96,7 +96,10 @@ typedef struct {
 } pthread_rwlockattr_t;
 
 // suseconds_t
-typedef int time_t;
+
+// define time_t here will cause recursive inclusion, move time_t to <time.h>
+// typedef int time_t;
+
 // timer_t
 // trace_attr_t
 // trace_event_id_t

@@ -203,3 +203,61 @@ These are some of the commonly used scheduling algorithms and techniques in oper
 ## processes
 Only the memory of stack needs to be considered, heap are all in main memory region.
 
+
+## Debug
+
+### generate file after compiler pre-process
+gcc -c ./src/test_include.c -E -CC -P -o build/test_include.c.pp
+
+
+2.8.5 Clocks and Timers
+
+|Member Type|Member Name| Description|
+|-|-|-|
+|struct timespec| it_interval| Timer period.|
+| struct timespec| it_value |Timer expiration.|
+
+
+## recursive inclusion problem, solved
+### POSIX draft:
+
+sys/types.h
+typedef struct {
+    ...
+  struct sched_param schedparam;
+  ...
+}
+
+sched.h
+
+struct sched_param {
+  int sched_ss_low_priority;
+  struct timespec sched_ss_repl_period;
+  struct timespec sched_ss_init_budget;
+  int sched_ss_max_repl;
+};
+
+time.h
+struct timespec {
+  time_t tv_sec; // Seconds.
+  long tv_nsec;  // Nanoseconds.
+};
+
+
+### POSIX released:
+sched.h
+struct timespec {
+  time_t tv_sec; // Seconds.
+  long tv_nsec;  // Nanoseconds.
+};
+
+
+
+time.h
+struct timespec {
+  time_t tv_sec; // Seconds.
+  long tv_nsec;  // Nanoseconds.
+};
+
+The solution is to make time_t definition to time.h
+

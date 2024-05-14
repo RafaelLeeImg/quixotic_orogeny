@@ -67,10 +67,6 @@ typedef struct {
 #define PTHREAD_SCOPE_PROCESS 0
 #define PTHREAD_SCOPE_SYSTEM 0
 
-int pthread_create(pthread_t *restrict thread,
-                   const pthread_attr_t *restrict attr,
-                   void *(*start_routine)(void *), void *restrict arg);
-
 int pthread_atfork(void (*)(void), void (*)(void), void (*)(void));
 int pthread_attr_destroy(pthread_attr_t *);
 int pthread_attr_getdetachstate(const pthread_attr_t *, int *);

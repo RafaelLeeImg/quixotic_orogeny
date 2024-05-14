@@ -197,4 +197,5 @@ int printf_not_used(const char *restrict str, ...) {
   va_end(arg_ptr);
 
   // printf("strlen = %d\n", strnlen("abc", 4096)); // strlen = 3
+  return 0;
 }

@@ -32,6 +32,10 @@ void process_2(void) {}
 
 int main(void) {
 
+  printf("sizeof(int) = %d\n", sizeof(int));
+  printf("sizeof(long int) = %d\n", sizeof(long int));
+  printf("sizeof(long long int) = %d\n", sizeof(long long int));
+
   char hello_world[] = "Hello World!\n";
   // char *hello_world = "World!\n";
 
@@ -85,9 +89,13 @@ int main(void) {
     }
   }
 
+  int *p = (int *)malloc(3000 * sizeof(int));
+
   for (int j = 0; j < 3000; j++) {
-    ;
+    p[j] = j;
   }
+
+  free(p);
 
   return 0;
 }

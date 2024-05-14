@@ -4,6 +4,9 @@
 
 #define _POSIX_SSIZE_MAX 32767
 
+typedef unsigned int size_t;
+typedef int ssize_t;
+
 #define not_defined int
 
 typedef int blkcnt_t;
@@ -76,8 +79,6 @@ typedef struct {
   int a;
 } pthread_rwlockattr_t;
 
-typedef unsigned int size_t;
-typedef int ssize_t;
 // suseconds_t
 typedef int time_t;
 // timer_t

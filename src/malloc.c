@@ -57,7 +57,12 @@ size_t malloc_available_size(memory_block_t *block) {
 }
 
 // posix
+// FIXME: known problem: if first node is freed, then the area will not be
+// allocated
 void *malloc(size_t size) {
+  if (0 == size) {
+    return (void *)0;
+  }
   // if no other node is allocated and required size is within available size
   // create first node
   if (!g_root) {

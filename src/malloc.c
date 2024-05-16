@@ -114,3 +114,32 @@ void *malloc(size_t size) {
     }
   }
 }
+
+// FIXME: when double free, there will be error
+void free(void *ptr) {
+  if (!g_root) {
+    return;
+  }
+  memory_block_t *iter = g_root;
+  memory_block_t *last;
+  // first
+  {
+    if (iter->memory == ptr) {
+      g_root = iter->next;
+      return;
+    }
+    last = iter;
+    // printf("iter = ");
+    iter = iter->next;
+  }
+  // second to last
+  while (iter) {
+    if (iter->memory == ptr) {
+      // remove this node from linked list
+      last->next = iter->next;
+      return;
+    }
+    last = iter;
+    iter = iter->next;
+  }
+}

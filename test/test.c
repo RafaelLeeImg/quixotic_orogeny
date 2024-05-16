@@ -1,48 +1,60 @@
-void print(char const str[]);
+#include "assert.h"
+#include "stdint.h"
+#include "stdio.h"
 
+// **************************** function prototype *****************************
 void operator_test(void);
+void test(void);
+void linker_script_info(void);
+extern void test_include(void);
+
+// ************************function implementation *****************************
+
+void test(void) {
+  test_include();
+  operator_test();
+}
 
 void operator_test(void) {
-  // ~1u == 0xfffffffe
-  // ~1 == 0xfffffffe
-  // ~1L == 0xfffffffe
-  // ~1uL == 0xfffffffe
-  // ~1L < 0
-  // ~1uL >= 0
+  assert(~1u == 0xfffffffe);
+  assert(~1 == 0xfffffffe);
+  assert(~1L == 0xfffffffe);
+  assert(~1uL == 0xfffffffe);
+  assert(~1L == -2);
+  assert(~1uL == 4294967294);
+}
 
-  if (~1u == 0xfffffffe) {
-    print("~1u == 0xfffffffe\n");
-  } else {
-    print("~1u != 0xfffffffe\n");
-  }
+// int vout(int arg_count, ...) {
+//   va_list arg_ptr;
+//   va_start(arg_ptr, arg_count);
+//   int sum = 0;
+//   for (int i = 0; i < arg_count; i++) {
+//     int number = va_arg(arg_ptr, int);
+//   }
+//   va_end(arg_ptr);
+//   return sum;
+// }
 
-  if (~1 == 0xfffffffe) {
-    print("~1 == 0xfffffffe\n");
-  } else {
-    print("~1 != 0xfffffffe\n");
-  }
+void linker_script_info(void) {
+  extern uint32_t _data_loadaddr;
+  extern uint32_t _data;
+  extern uint32_t _edata;
+  extern uint32_t _ebss;
+  extern uint32_t __preinit_array_start;
+  extern uint32_t __preinit_array_end;
+  extern uint32_t __init_array_start;
+  extern uint32_t __init_array_end;
+  extern uint32_t __fini_array_start;
+  extern uint32_t __fini_array_end;
 
-  if (~1L == 0xfffffffe) {
-    print("~1L == 0xfffffffe\n");
-  } else {
-    print("~1L != 0xfffffffe\n");
-  }
-
-  if (~1uL == 0xfffffffe) {
-    print("~1uL == 0xfffffffe\n");
-  } else {
-    print("~1uL != 0xfffffffe\n");
-  }
-
-  if (~1L >= 0) {
-    print("~1L >= 0\n");
-  } else {
-    print("~1L < 0\n");
-  }
-
-  if (~1uL >= 0) {
-    print("~1uL >= 0\n");
-  } else {
-    print("~1uL < 0\n");
-  }
+  printf("_data_loadaddr = 0x%X\n", _data_loadaddr);
+  printf("_data = 0x%X\n", _data);
+  printf("_edata = 0x%X\n", _edata);
+  printf("_ebss = 0x%X\n", _ebss);
+  printf("__preinit_array_start = 0x%X\n", __preinit_array_start);
+  printf("__preinit_array_end = 0x%X\n", __preinit_array_end);
+  printf("__init_array_start = 0x%X\n", __init_array_start);
+  printf("__init_array_end = 0x%X\n", __init_array_end);
+  printf("__fini_array_start = 0x%X\n", __fini_array_start);
+  printf("__fini_array_end = 0x%X\n", __fini_array_end);
 }

@@ -22,6 +22,11 @@ extern unsigned char *heap;
 extern unsigned char *heap_start;
 extern unsigned char *heap_end;
 
+// for debug propose
+unsigned char placeholder[0x600 + 63] = {12};
+void debug_malloc(void);
+size_t malloc_available_size(memory_block_t *block);
+
 // shall be heap_start, anyway, they are the same address
 // g_root is a NULL value or pointer points to the next node of the linked list
 memory_block_t *g_root = (void *)0;
@@ -91,7 +96,7 @@ void *malloc(size_t size) {
       new_area = (memory_block_t *)((unsigned char *)iter->memory + iter->size);
       new_area->size = size;
       new_area->memory = (unsigned char *)new_area + sizeof(memory_block_t);
-      new_area->next = (memory_block_t *)0;
+      new_area->next = 0;
       iter->next = new_area;
       ((unsigned char *)new_area->memory)[0] = 0xf1;
       ((unsigned char *)new_area->memory)[1] = 0xf2;
@@ -147,10 +152,10 @@ void free(void *ptr) {
 void debug_malloc(void) {
   memory_block_t *iter = g_root;
   while (iter) {
-    printf("iter = % 8p, ", iter);
+    printf("iter = %p, ", iter);
     printf(".size = % 8d, ", iter->size);
-    printf(".memory = % 8p, ", iter->memory);
-    printf(".next = % 8p\n", iter->next);
+    printf(".memory = %p, ", iter->memory);
+    printf(".next = %p\n", iter->next);
     // if iter->next == 0, loop will break
     iter = iter->next;
   }

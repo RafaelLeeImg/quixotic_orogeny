@@ -143,3 +143,15 @@ void free(void *ptr) {
     iter = iter->next;
   }
 }
+
+void debug_malloc(void) {
+  memory_block_t *iter = g_root;
+  while (iter) {
+    printf("iter = % 8p, ", iter);
+    printf(".size = % 8d, ", iter->size);
+    printf(".memory = % 8p, ", iter->memory);
+    printf(".next = % 8p\n", iter->next);
+    // if iter->next == 0, loop will break
+    iter = iter->next;
+  }
+}

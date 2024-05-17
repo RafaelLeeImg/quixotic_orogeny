@@ -22,8 +22,6 @@ extern unsigned char *heap;
 extern unsigned char *heap_start;
 extern unsigned char *heap_end;
 
-// for debug propose
-unsigned char placeholder[0x600 + 63] = {12};
 void debug_malloc(void);
 size_t malloc_available_size(memory_block_t *block);
 
@@ -37,17 +35,27 @@ memory_block_t *g_root = (void *)0;
 // calculate the space after this block and before heap_end
 size_t malloc_available_size(memory_block_t *block) {
   // sizeof(memory_block_t) needs to be extracted, since it needs to reserve
-  // some area for the memory_block_t when making a new area
-
+  // some area for the memory_block_t when making a new area, so this equation
+  // could lead to negative numbers
   if (!block) {
-    ssize_t x = heap_end - sizeof(memory_block_t) - heap_start;
+    return heap_end - sizeof(memory_block_t) - heap_start;
+  }
+  // g_root points to somewhere after heap_start, so there is a space at the
+  // start of heap which is not used try to allocate memory in this space
+  else if (block == (memory_block_t *)heap_start &&
+           (unsigned char *)g_root > heap_start) {
+    ssize_t x = (unsigned char *)(g_root) -
+                (unsigned char *)(memory_block_t *)heap_start -
+                sizeof(memory_block_t);
     return x;
   }
 
   ssize_t end;
   if (!(block->next)) {
+    // last node
     end = (ssize_t)(unsigned char *)heap_end;
   } else {
+    // area between this node and next node
     end = (ssize_t)(unsigned char *)(block->next);
   }
   ssize_t x = end - sizeof(memory_block_t) -
@@ -63,22 +71,31 @@ size_t malloc_available_size(memory_block_t *block) {
 
 // posix
 // FIXME: known problem: if first node is freed, then the area will not be
-// allocated
+// allocated (fixed)
 void *malloc(size_t size) {
   if (0 == size) {
     return (void *)0;
   }
   // if no other node is allocated and required size is within available size
   // create first node
-  if (!g_root) {
-    size_t available_size = malloc_available_size((memory_block_t *)0);
+  if (!g_root || g_root != (memory_block_t *)heap_start) {
+    // FIXME: error here, 20240517 00:01
+    // if g_root not exists, calculate size with all stack
+    // if g_root exists, find the space between heap_start and the first block
+    size_t available_size;
+    if (!g_root) {
+      available_size = malloc_available_size((memory_block_t *)0);
+    } else {
+      available_size = malloc_available_size((memory_block_t *)heap_start);
+    }
     // printf("available_size = 0x%x\n", available_size);
     if (available_size >= size) {
       memory_block_t *iter = (memory_block_t *)heap_start;
+      memory_block_t *next_node = g_root;
       g_root = iter;
       iter->size = size;
       iter->memory = heap_start + sizeof(memory_block_t);
-      iter->next = (memory_block_t *)0;
+      iter->next = next_node;
       return iter->memory;
     } else {
       return (void *)0;
@@ -89,33 +106,33 @@ void *malloc(size_t size) {
 
   // select first area that are available
   while (1) {
-    ssize_t available_size = malloc_available_size(iter);
+    size_t available_size = malloc_available_size(iter);
     // if available_size >= size, allocate here, if not try next node
     if (available_size >= size) {
       memory_block_t *new_area = 0;
       new_area = (memory_block_t *)((unsigned char *)iter->memory + iter->size);
       new_area->size = size;
       new_area->memory = (unsigned char *)new_area + sizeof(memory_block_t);
-      new_area->next = 0;
-      iter->next = new_area;
-      ((unsigned char *)new_area->memory)[0] = 0xf1;
-      ((unsigned char *)new_area->memory)[1] = 0xf2;
-      ((unsigned char *)new_area->memory)[2] = 0x3f;
-      ((unsigned char *)new_area->memory)[3] = 0x4f;
 
-      // //   new_area
-      // if (iter->next) {
-      //   new_area->next = iter->next;
-      //   iter->next = new_area;
+      // if this node is last
+      if (iter->next) {
+        new_area->next = iter->next;
+      } else {
+        new_area->next = 0;
+      }
+      iter->next = new_area;
+
+      // debugging
+      // for (size_t i = 0; i < size; i++) {
+      //   ((unsigned char *)new_area->memory)[i] = 0xaa;
       // }
+
       return new_area->memory;
     } else {
       if (!(iter->next)) {
         return 0;
       }
       iter = iter->next;
-      // printf("next, ");
-      continue;
     }
   }
 }
@@ -151,8 +168,8 @@ void free(void *ptr) {
 
 void debug_malloc(void) {
   memory_block_t *iter = g_root;
-  while (iter) {
-    printf("iter = %p, ", iter);
+  for (int i = 0; iter; i++) {
+    printf("[% 3d], iter = %p, ", i, iter);
     printf(".size = % 8d, ", iter->size);
     printf(".memory = %p, ", iter->memory);
     printf(".next = %p\n", iter->next);

@@ -7,15 +7,17 @@ void operator_test(void);
 void test(void);
 void linker_script_info(void);
 extern void test_include(void);
+extern void test_malloc(void);
 
 // ************************function implementation *****************************
 
 void test(void) {
   test_include();
-  operator_test();
+  test_malloc();
+  test_operator();
 }
 
-void operator_test(void) {
+void test_operator(void) {
   assert(~1u == 0xfffffffe);
   assert(~1 == 0xfffffffe);
   assert(~1L == 0xfffffffe);

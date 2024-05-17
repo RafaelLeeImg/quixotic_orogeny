@@ -27,7 +27,14 @@ int main(void) {
   clock_setup();
   gpio_setup();
   usart_setup();
-  print(hello_world);
+  // print(hello_world);
+
+  printf("test printf_int = %d, %d, %d, %d\n", 16, 32, 64, 128, 256, 512, 1024,
+         2048, 4096);
+  // printf("test printf_hex = 0x%x\n", 0xffff);
+  // printf("test printf_str =  %s\n", hello_world);
+  // printf("aisioa = %d\n", 1891289);
+  test();
   systick_setup();
 
   cm_enable_interrupts();

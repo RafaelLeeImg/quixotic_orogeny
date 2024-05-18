@@ -8,6 +8,7 @@ void test(void);
 void linker_script_info(void);
 extern void test_include(void);
 extern void test_malloc(void);
+extern void test_memset(void);
 
 // ************************function implementation *****************************
 
@@ -15,6 +16,8 @@ void test(void) {
   test_include();
   test_malloc();
   test_operator();
+  test_memset();
+  printf("all tests passed!!!\n");
 }
 
 void test_operator(void) {

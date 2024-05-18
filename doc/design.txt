@@ -1,0 +1,172 @@
+OS design note
+
+Could you list around 100 POSIX APIs shall I mostly care when I write the. RTOS?
+ChatGPT
+Certainly! Here's a list of approximately 100 POSIX APIs that are commonly used when developing an RTOS. These APIs cover various aspects such as process/thread management, synchronization, inter-process communication, file I/O, memory management, and time management:
+
+1, pthread_create
+2, pthread_join
+3, pthread_detach
+4, pthread_exit
+5, pthread_self
+6, pthread_cancel
+7, pthread_mutex_init
+8, pthread_mutex_destroy
+9, pthread_mutex_lock
+10, pthread_mutex_trylock
+11, pthread_mutex_unlock
+12, pthread_rwlock_init
+13, pthread_rwlock_destroy
+14, pthread_rwlock_rdlock
+15, pthread_rwlock_wrlock
+16, pthread_rwlock_unlock
+17, pthread_cond_init
+18, pthread_cond_destroy
+19, pthread_cond_wait
+20, pthread_cond_timedwait
+21, pthread_cond_signal
+22, pthread_cond_broadcast
+23, pthread_barrier_init
+24, pthread_barrier_destroy
+25, pthread_barrier_wait
+26, pthread_spin_init
+27, pthread_spin_destroy
+28, pthread_spin_lock
+29, pthread_spin_trylock
+30, pthread_spin_unlock
+31, sem_init
+32, sem_destroy
+33, sem_wait
+34, sem_trywait
+35, sem_post
+36, sem_getvalue
+37, shm_open
+38, shm_unlink
+39, mmap
+40, munmap
+41, mprotect
+42, msync
+43, msgget
+44, msgctl
+45, msgsnd
+46, msgrcv
+47, mq_open
+48, mq_close
+49, mq_unlink
+50, mq_send
+51, mq_receive
+52, mq_getattr
+53, mq_setattr
+54, pipe
+55, pipe2
+56, dup
+57, dup2
+58, read
+59, write
+60, close
+61, fcntl
+62, opendir
+63, readdir
+64, closedir
+65, fork
+66, exec
+67, wait
+68, waitpid
+69, kill
+70, signal
+71, sigaction
+72, sigprocmask
+73, sigwait
+74, sigsuspend
+75, usleep
+76, sleep
+77, nanosleep
+78, clock_gettime
+79, clock_settime
+80, clock_nanosleep
+81, time
+82, gettimeofday
+83, timer_create
+84, timer_delete
+85, timer_settime
+86, timer_gettime
+87, sched_yield
+88, sched_get_priority_max
+89, sched_get_priority_min
+90, sched_getparam
+91, sched_setparam
+92, sched_rr_get_interval
+93, getpriority
+94, setpriority
+95, uname
+96, gethostname
+97, getcwd
+98, chdir
+99, access
+100, stat
+
+
+# semaphore
+31, sem_init
+33, sem_wait
+34, sem_trywait
+36, sem_getvalue
+35, sem_post
+37, shm_open
+32, sem_destroy
+38, shm_unlink
+
+
+# pthread
+
+1, pthread_create
+2, pthread_join
+3, pthread_detach
+4, pthread_exit
+5, pthread_self
+6, pthread_cancel
+7, pthread_mutex_init
+8, pthread_mutex_destroy
+9, pthread_mutex_lock
+10, pthread_mutex_trylock
+11, pthread_mutex_unlock
+12, pthread_rwlock_init
+13, pthread_rwlock_destroy
+14, pthread_rwlock_rdlock
+15, pthread_rwlock_wrlock
+16, pthread_rwlock_unlock
+17, pthread_cond_init
+18, pthread_cond_destroy
+19, pthread_cond_wait
+20, pthread_cond_timedwait
+21, pthread_cond_signal
+22, pthread_cond_broadcast
+23, pthread_barrier_init
+24, pthread_barrier_destroy
+25, pthread_barrier_wait
+26, pthread_spin_init
+27, pthread_spin_destroy
+28, pthread_spin_lock
+29, pthread_spin_trylock
+30, pthread_spin_unlock
+
+
+
+
+65, fork
+66, exec
+67, wait
+68, waitpid
+69, kill
+70, signal
+71, sigaction
+72, sigprocmask
+73, sigwait
+74, sigsuspend
+75, usleep
+76, sleep
+
+
+
+# name
+quixotic_orogeny

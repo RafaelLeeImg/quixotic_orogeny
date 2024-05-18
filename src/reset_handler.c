@@ -2,18 +2,20 @@
 
 typedef void (*funcp_t)(void);
 
-void reset_handler(void) {
-  extern uint32_t _data_loadaddr;
-  extern uint32_t _data;
-  extern uint32_t _edata;
-  extern uint32_t _ebss;
-  extern uint32_t __preinit_array_start;
-  extern uint32_t __preinit_array_end;
-  extern uint32_t __init_array_start;
-  extern uint32_t __init_array_end;
-  extern uint32_t __fini_array_start;
-  extern uint32_t __fini_array_end;
+extern uint32_t _data_loadaddr;
+extern uint32_t _data;
+extern uint32_t _edata;
+extern uint32_t _ebss;
+extern uint32_t __preinit_array_start;
+extern uint32_t __preinit_array_end;
+extern uint32_t __init_array_start;
+extern uint32_t __init_array_end;
+extern uint32_t __fini_array_start;
+extern uint32_t __fini_array_end;
 
+int main(void);
+
+void reset_handler(void) {
   volatile unsigned int *src, *dest;
 
   funcp_t *fp;
@@ -41,7 +43,7 @@ void reset_handler(void) {
     (*fp)();
   }
 
-  (void)main();
+  main();
 
   /* Destructors. */
   for (fp = &__fini_array_start; fp < &__fini_array_end; fp++) {

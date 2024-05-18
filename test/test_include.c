@@ -1,5 +1,5 @@
 #include "sched.h"
 
-int test_include(void);
+__attribute__((const)) int test_include(void);
 
-int test_include(void) { return 0; }
+__attribute__((const)) int test_include(void) { return 0; }

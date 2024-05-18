@@ -4,6 +4,7 @@
 #include "sys/types.h"
 
 extern void debug_malloc(void);
+extern memory_block_t *g_root;
 void test_malloc(void);
 
 void test_malloc(void) {
@@ -13,7 +14,6 @@ void test_malloc(void) {
   free(a[0]);
   a[0] = 0;
   debug_malloc();
-  extern memory_block_t *g_root;
   assert(g_root == (void *)0);
   printf("after malloc\n");
 
@@ -21,7 +21,7 @@ void test_malloc(void) {
   for (int i = 0; i < 7; i++) {
     a[i] = (int *)malloc(244);
     printf("i = %2d, ", i);
-    printf("a[%2d] = %p\n", i, a[i]);
+    printf("a[%2d] = %p\n", i, (void *)a[i]);
     debug_malloc();
   }
   for (int i = 0; i < 7; i++) {
@@ -46,7 +46,7 @@ void test_malloc(void) {
     if (!a[i]) {
       a[i] = (int *)malloc(240);
       printf("i = %2d\n", i);
-      printf("a[%2d] = %p\n", i, a[i]);
+      printf("a[%2d] = %p\n", i, (void *)a[i]);
       debug_malloc();
     }
   }

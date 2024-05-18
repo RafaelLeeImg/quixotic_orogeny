@@ -1,6 +1,11 @@
 #include "pthread.h"
 #include "stdint.h"
 
+void __dmb(void);
+uint32_t __ldrex(volatile uint32_t *addr);
+uint32_t __strex(uint32_t val, volatile uint32_t *addr);
+void __clrex(void);
+
 /* DMB is supported on CM0 */
 void __dmb(void) { __asm__ volatile("dmb"); }
 

@@ -1,6 +1,11 @@
 #include "pthread.h"
 #include "stdio.h"
 
+void cm_disable_interrupts(void);
+void cm_disable_faults(void);
+void cm_enable_interrupts(void);
+void cm_enable_faults(void);
+
 void cm_disable_interrupts(void) { __asm__ volatile("CPSID I\n"); }
 void cm_disable_faults(void) { __asm__ volatile("CPSID F\n"); }
 void cm_enable_interrupts(void) { __asm__ volatile("CPSIE I\n"); }

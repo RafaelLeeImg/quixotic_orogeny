@@ -9,9 +9,11 @@ typedef char *va_list;
 #define likely(x) __builtin_expect(!!(x), 1)
 #define unlikely(x) __builtin_expect(!!(x), 0)
 
-void printf_int(char str[], size_t start, size_t end, int number);
-void printf_hex(char str[], size_t start, size_t end, unsigned int number);
-void printf_str(char str[], size_t start, size_t end, char *input);
+void printf_int(const char str[], size_t start, size_t end, int number);
+void printf_hex(const char str[], size_t start, size_t end,
+                unsigned int number);
+void printf_str(const char str[], size_t start, size_t end, char *input);
+int _write(int file, char *data, int len);
 
 int _write(int file, char *data, int len) {
   (void)file;
@@ -23,7 +25,7 @@ int _write(int file, char *data, int len) {
 
 // TODO: fix print 2147483648 ~ 4294967295
 // print format like %03d
-void printf_int(char str[], size_t start, size_t end, int number) {
+void printf_int(const char str[], size_t start, size_t end, int number) {
   // printf("%ld\n", -1L); // -1
   // printf("%d\n", -1L);  // -1
   // printf("%ld\n", -1);  // 4294967295
@@ -74,7 +76,8 @@ void printf_int(char str[], size_t start, size_t end, int number) {
 }
 
 // print format like %03d
-void printf_hex(char str[], size_t start, size_t end, unsigned int number) {
+void printf_hex(const char str[], size_t start, size_t end,
+                unsigned int number) {
   // printf("0x%lx\n", -1L); // 0xffffffffffffffff
   // printf("0x%x\n", -1L);  // 0xffffffff
   // printf("0x%lx\n", -1);  // 0xffffffff
@@ -114,7 +117,7 @@ void printf_hex(char str[], size_t start, size_t end, unsigned int number) {
 }
 
 // TODO: not tested, not verified
-void printf_str(char str[], size_t start, size_t end, char *input) {
+void printf_str(const char str[], size_t start, size_t end, char *input) {
   size_t len = strnlen(str, MAX_STRING_LEN);
   for (size_t i = 0; i < len; i++) {
     *USART1_DR = input[i];
@@ -168,7 +171,7 @@ int printf_not_used(const char *restrict str, ...) {
           break;
         case 'X':
         case 'x': {
-          int number = va_arg(arg_ptr, int);
+          unsigned int number = va_arg(arg_ptr, unsigned int);
           printf_hex(str, start, j + 1, number);
           j--;
           i--;

@@ -23,7 +23,7 @@ extern unsigned char *heap_start;
 extern unsigned char *heap_end;
 
 void debug_malloc(void);
-size_t malloc_available_size(memory_block_t *block);
+__attribute__((pure)) size_t malloc_available_size(memory_block_t *block);
 
 // shall be heap_start, anyway, they are the same address
 // g_root is a NULL value or pointer points to the next node of the linked list
@@ -33,7 +33,7 @@ memory_block_t *g_root = (void *)0;
 // if block exists and next block is valid, calculate the space after this block
 // and between next block header if block exists and next block is not valid,
 // calculate the space after this block and before heap_end
-size_t malloc_available_size(memory_block_t *block) {
+__attribute__((pure)) size_t malloc_available_size(memory_block_t *block) {
   // sizeof(memory_block_t) needs to be extracted, since it needs to reserve
   // some area for the memory_block_t when making a new area, so this equation
   // could lead to negative numbers
@@ -77,7 +77,7 @@ void *malloc(size_t size) {
   }
   // if no other node is allocated and required size is within available size
   // create first node
-  if (!g_root || g_root != (memory_block_t *)heap_start) {
+  if (!g_root || (unsigned char *)g_root != heap_start) {
     // FIXME: error here, 20240517 00:01
     // if g_root not exists, calculate size with all stack
     // if g_root exists, find the space between heap_start and the first block
@@ -169,7 +169,7 @@ void debug_malloc(void) {
   memory_block_t *iter = g_root;
   for (int i = 0; iter; i++) {
     printf("[% 3d], iter = %p, ", i, (void *)iter);
-    printf(".size = % 8d, ", iter->size);
+    printf(".size = %8u, ", iter->size);
     printf(".memory = %p, ", iter->memory);
     printf(".next = %p\n", (void *)iter->next);
     // if iter->next == 0, loop will break

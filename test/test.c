@@ -6,9 +6,10 @@
 void operator_test(void);
 void test(void);
 void linker_script_info(void);
-extern void test_include(void);
-extern void test_malloc(void);
-extern void test_memset(void);
+void test_include(void);
+void test_malloc(void);
+void test_memset(void);
+void test_operator(void);
 
 // *************************** global variables ********************************
 extern uint32_t _data_loadaddr;

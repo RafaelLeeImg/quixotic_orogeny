@@ -5,4 +5,7 @@ build/*
 *.elf
 main
 olimex_STM32-H405_sch.pdf*
-
+*/#*
+*~
+compile_commands.json
+*.patch

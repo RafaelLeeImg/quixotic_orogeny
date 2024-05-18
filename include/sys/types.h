@@ -8,7 +8,7 @@
 typedef unsigned int size_t;
 typedef int ssize_t;
 
-#define not_defined int
+typedef float not_defined;
 
 typedef int blkcnt_t;
 typedef int blksize_t;

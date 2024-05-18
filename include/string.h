@@ -8,4 +8,6 @@
 size_t strnlen(const char s[], size_t maxlen);
 // size_t strnlen();
 
+void *memset(void *s, int c, size_t n);
+
 #endif /* __STRING_H__ */

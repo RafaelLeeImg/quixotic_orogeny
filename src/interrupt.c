@@ -11,7 +11,6 @@ volatile unsigned int systick_cnt = 0;
 extern pthread_mutex_t lock1;
 
 void sys_tick_handler(void) {
-  // extern unsigned int systick_cnt;
   // print(".");
   if ((systick_cnt % 10) == 0) {
     printf(".");
@@ -24,11 +23,11 @@ void sys_tick_handler(void) {
     printf("t = %ud\n", systick_cnt);
     printf("305 before unlock\n");
     // __clrex();
-    printf("lock1.locked_ = %ud\n", lock1.locked_);
+    printf("lock1.locked_ = %d\n", lock1.locked_);
     // pthread_spin_lock(&lock1);
     pthread_mutex_unlock(&lock1);
     printf("305 after unlock\n");
-    printf("lock1.locked_ = %ud\n", lock1.locked_);
+    printf("lock1.locked_ = %d\n", lock1.locked_);
   }
 
   systick_cnt++;

@@ -38,35 +38,34 @@ size_t malloc_available_size(memory_block_t *block) {
   // some area for the memory_block_t when making a new area, so this equation
   // could lead to negative numbers
   if (!block) {
-    return heap_end - sizeof(memory_block_t) - heap_start;
+    return (unsigned int)heap_end - sizeof(memory_block_t) -
+           (unsigned int)heap_start;
   }
   // g_root points to somewhere after heap_start, so there is a space at the
   // start of heap which is not used try to allocate memory in this space
   else if (block == (memory_block_t *)heap_start &&
            (unsigned char *)g_root > heap_start) {
-    ssize_t x = (unsigned char *)(g_root) -
-                (unsigned char *)(memory_block_t *)heap_start -
-                sizeof(memory_block_t);
+    size_t x = (unsigned char *)g_root - (unsigned char *)heap_start -
+               sizeof(memory_block_t);
     return x;
   }
 
-  ssize_t end;
+  size_t end;
   if (!(block->next)) {
     // last node
-    end = (ssize_t)(unsigned char *)heap_end;
+    end = (size_t)(unsigned char *)heap_end;
   } else {
     // area between this node and next node
-    end = (ssize_t)(unsigned char *)(block->next);
+    end = (size_t)(unsigned char *)(block->next);
   }
   ssize_t x = end - sizeof(memory_block_t) -
-              (ssize_t)(unsigned char *)block->memory - block->size;
+              (size_t)(unsigned char *)block->memory - block->size;
   // because of "- sizeof(memory_block_t)", the size could be less than 0
   if (x < 0) {
     return 0;
   } else {
-    return x;
+    return (size_t)x;
   }
-  return x;
 }
 
 // posix
@@ -169,10 +168,10 @@ void free(void *ptr) {
 void debug_malloc(void) {
   memory_block_t *iter = g_root;
   for (int i = 0; iter; i++) {
-    printf("[% 3d], iter = %p, ", i, iter);
+    printf("[% 3d], iter = %p, ", i, (void *)iter);
     printf(".size = % 8d, ", iter->size);
     printf(".memory = %p, ", iter->memory);
-    printf(".next = %p\n", iter->next);
+    printf(".next = %p\n", (void *)iter->next);
     // if iter->next == 0, loop will break
     iter = iter->next;
   }

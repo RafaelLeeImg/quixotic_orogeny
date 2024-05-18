@@ -10,6 +10,10 @@
 // #include <stdarg.h>
 
 #define MAX_STRING_LEN 4096
+void print(char const str[]);
+void test(void);
+void cm_enable_interrupts(void);
+void cm_enable_faults(void);
 
 void print(char const str[]) {
   for (size_t i = 0; i < strnlen(str, MAX_STRING_LEN) / sizeof(char); i++) {
@@ -18,6 +22,7 @@ void print(char const str[]) {
 }
 
 pthread_mutex_t lock1;
+extern volatile unsigned int systick_cnt;
 
 int main(void) {
 
@@ -29,8 +34,6 @@ int main(void) {
   usart_setup();
   // print(hello_world);
 
-  printf("test printf_int = %d, %d, %d, %d\n", 16, 32, 64, 128, 256, 512, 1024,
-         2048, 4096);
   // printf("test printf_hex = 0x%x\n", 0xffff);
   // printf("test printf_str =  %s\n", hello_world);
   // printf("aisioa = %d\n", 1891289);
@@ -44,11 +47,6 @@ int main(void) {
   printf("console_setup\n");
   console_setup();
 
-  // extern static volatile unsigned int systick_cnt;
-  // extern systick_cnt;
-  // int systick_cnt = 0;
-  // extern lock1;
-  extern volatile unsigned int systick_cnt;
   int locked = 0;
   while (1) {
     // printf(".");
@@ -61,11 +59,11 @@ int main(void) {
         // if (locked == 0) {
         print("200 before lock\n");
         // __clrex();
-        printf("lock1.locked_ = %ud\n", lock1.locked_);
+        printf("lock1.locked_ = %d\n", lock1.locked_);
         pthread_mutex_lock(&lock1);
         // pthread_mutex_unlock(&lock1);
         print("200 after lock\n");
-        printf("lock1.locked_ = %ud\n", lock1.locked_);
+        printf("lock1.locked_ = %d\n", lock1.locked_);
         locked = 1;
       }
     } else if (systick_cnt % 500 == 499 /*  && systick_cnt <= 410 */) {

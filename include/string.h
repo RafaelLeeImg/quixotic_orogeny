@@ -5,7 +5,7 @@
 
 #define MAX_STRING_LEN 4096
 
-size_t strnlen(const char s[], size_t maxlen);
+__attribute__((pure)) size_t strnlen(const char s[], size_t maxlen);
 // size_t strnlen();
 
 void *memset(void *s, int c, size_t n);

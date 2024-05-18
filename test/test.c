@@ -10,7 +10,19 @@ extern void test_include(void);
 extern void test_malloc(void);
 extern void test_memset(void);
 
-// ************************function implementation *****************************
+// *************************** global variables ********************************
+extern uint32_t _data_loadaddr;
+extern uint32_t _data;
+extern uint32_t _edata;
+extern uint32_t _ebss;
+extern uint32_t __preinit_array_start;
+extern uint32_t __preinit_array_end;
+extern uint32_t __init_array_start;
+extern uint32_t __init_array_end;
+extern uint32_t __fini_array_start;
+extern uint32_t __fini_array_end;
+
+// ************************ function implementation ****************************
 
 void test(void) {
   test_include();
@@ -41,17 +53,6 @@ void test_operator(void) {
 // }
 
 void linker_script_info(void) {
-  extern uint32_t _data_loadaddr;
-  extern uint32_t _data;
-  extern uint32_t _edata;
-  extern uint32_t _ebss;
-  extern uint32_t __preinit_array_start;
-  extern uint32_t __preinit_array_end;
-  extern uint32_t __init_array_start;
-  extern uint32_t __init_array_end;
-  extern uint32_t __fini_array_start;
-  extern uint32_t __fini_array_end;
-
   printf("_data_loadaddr = 0x%X\n", _data_loadaddr);
   printf("_data = 0x%X\n", _data);
   printf("_edata = 0x%X\n", _edata);

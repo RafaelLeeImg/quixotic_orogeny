@@ -3,7 +3,7 @@
 #include "string.h"
 #include "stdint.h"
 
-size_t strnlen(const char s[], size_t maxlen) {
+__attribute__((pure)) size_t strnlen(const char s[], size_t maxlen) {
   for (size_t i = 0; i < maxlen; i++) {
     if (!s[i])
       return i + 1;
@@ -13,7 +13,7 @@ size_t strnlen(const char s[], size_t maxlen) {
 
 // TODO: What if c in memset >= 256???
 void *memset(void *s, int c, size_t n) {
-  unsigned char *ptr = s;
+  unsigned char *ptr = (unsigned char *)s;
   for (size_t i = 0; i < n; i++) {
     *(ptr + i) = (unsigned int)c & 0xFF;
   }

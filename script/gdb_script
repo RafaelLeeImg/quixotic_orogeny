@@ -3,24 +3,24 @@
 
 set debug arm
 file build/main.elf
+# file /home/r/proj/quixotic_orogeny/build/main.elf
 # file /dev/shm/d/proj/libopencm3-examples/examples/stm32/f4/olimex_stm32_h405/usart/usart.elf
-target remote localhost:1234
 
-
-
-# # GEF setup          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-# # gef config context.layout "-args source threads trace extra -memory"
-# gef config context.layout "-regs -stack code -args source -threads -trace -extra -memory"
-# gef config context.nb_lines_code 12
-# layout split
-# tui disable
-# # GEF setup, END     vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# target remote localhost:1234
+gef-remote localhost 1234
 
 
 # b sys_tick_handler
 b main
-c
-b main.c:67
+b main.c:179
+# b malloc
+# b malloc_available_size
+# b free
+# b malloc_available_size
+
+# b *0x080085c0
+# b reset_handler
+# b main.c:67
 # b stdio.c:157
 # b stdio.c:169
 

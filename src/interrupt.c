@@ -18,15 +18,15 @@ extern pthread_mutex_t lock1;
 void sys_tick_handler(void) {
   // print(".");
   if ((systick_cnt % 10) == 0) {
-    printf(".");
+    // printf(".");
     if ((systick_cnt % 1000) == 0) {
-      printf("\n");
+      // printf("\n");
     }
   }
 
   if ((systick_cnt % 500) == 305) {
-    printf("t = %ud\n", systick_cnt);
-    printf("305 before unlock\n");
+    // printf("t = %ud\n", systick_cnt);
+    // printf("305 before unlock\n");
     // __clrex();
     printf("lock1.locked_ = %d\n", lock1.locked_);
     // pthread_spin_lock(&lock1);

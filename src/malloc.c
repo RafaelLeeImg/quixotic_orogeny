@@ -22,6 +22,9 @@ extern unsigned char *heap;
 extern unsigned char *heap_start;
 extern unsigned char *heap_end;
 
+// debugging
+// unsigned char placeholder[0x600 + 63] = {12};
+unsigned char placeholder[2361 - 0x300] = {12};
 void debug_malloc(void);
 __attribute__((pure)) size_t malloc_available_size(memory_block_t *block);
 

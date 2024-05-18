@@ -1,3 +1,4 @@
+#include "assert.h"
 #include "console.h"
 #include "hardware_clock.h"
 #include "hardware_gpio.h"
@@ -5,6 +6,7 @@
 #include "hardware_usart.h"
 #include "pthread.h"
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 #include "sys/types.h"
 // #include <stdarg.h>
@@ -69,22 +71,33 @@ int main(void) {
   printf("console_setup\n");
   console_setup();
 
-  extern const char *heap_start;
-  extern const char *heap_end;
-  pthread_attr_t attr0;
-  pthread_attr_init(&attr0);
-  pthread_attr_setstack(&attr0, heap_start, 512);
+  printf("After console setup\n");
 
-  pthread_attr_t attr1;
-  pthread_attr_init(&attr1);
-  pthread_attr_setstack(&attr1, heap_start + 512, 512);
+  extern memory_block_t *g_root;
+  printf("g_root->next = %p\n", g_root->next);
 
-  pthread_t pid0 = 1;
-  pthread_t pid1 = 2;
-  pthread_create(pid0, &attr0, process_0, 0);
+  // extern const unsigned char *heap_start;
+  // extern const unsigned char *heap_end;
+  // pthread_attr_t attr0;
+  // pthread_attr_init(&attr0);
+  // pthread_attr_setstack(&attr0, heap_start, 512);
 
-  pthread_create(pid1, &attr1, process_1, 0);
-  // pthread_create(pid0,attr0,process_0,NULL);
+  // pthread_attr_t attr1;
+  // pthread_attr_init(&attr1);
+  // pthread_attr_setstack(&attr1, heap_start + 512, 512);
+
+  // pthread_t pid0 = 1;
+  // pthread_t pid1 = 2;
+
+  extern unsigned char placeholder[];
+  printf("placeholder = %p\n", placeholder);
+  extern unsigned char *heap_start;
+  printf("heap_start = %p\n", heap_start);
+
+  // pthread_create(pid0, &attr0, process_0, 0);
+  // pthread_create(pid1, &attr1, process_1, 0);
+
+  // // pthread_create(pid0,attr0,process_0,NULL);
 
   // extern static volatile unsigned int systick_cnt;
   // extern systick_cnt;

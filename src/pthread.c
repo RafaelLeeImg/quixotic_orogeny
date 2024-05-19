@@ -1,5 +1,10 @@
 #include "pthread.h"
 #include "errno.h"
+#include "os_define.h"
+#include "stdlib.h"
+
+process_control_block_t os_thresds[OS_MAX_PROCESS] = {0};
+pthread_attr_t os_thresd_attrs[OS_MAX_PROCESS] = {0};
 
 int pthread_attr_init(pthread_attr_t *attr) {
   pthread_attr_setdetachstate(attr, 0);
@@ -14,7 +19,10 @@ int pthread_attr_init(pthread_attr_t *attr) {
   return 0;
 }
 
-int pthread_attr_destroy(pthread_attr_t *attr) { return 0; }
+int pthread_attr_destroy(pthread_attr_t *attr) {
+  free(attr->stackaddr);
+  return 0;
+}
 
 int pthread_attr_getdetachstate(const pthread_attr_t *attr, int *detachstate) {
   if (!attr) {
@@ -135,4 +143,26 @@ int pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize) {
 
 int pthread_create(pthread_t *restrict thread,
                    const pthread_attr_t *restrict attr,
-                   void *(*start_routine)(void *), void *restrict arg) {}
+                   void *(*start_routine)(void *), void *restrict arg) {
+  for (int i = 0; i < OS_MAX_PROCESS; i++) {
+    if (os_thresds[i].pid == 0) {
+      unsigned char *stackaddr = (void *)malloc(PROCESS_MEMORY);
+      size_t stacksize = 0;
+      unsigned int stackend = stackaddr + PROCESS_MEMORY;
+      // align 4 bytes
+      stackend = stackend - (stackend & 3);
+      stacksize = stackend - (unsigned int)stackaddr;
+      // printf("stacksize = 0x%08x\n", stacksize);
+      process_control_block_t pcb = os_thresds[i];
+      pthread_attr_t process_attr = os_thresd_attrs[i];
+      pthread_attr_setstack(&process_attr, stackaddr, stacksize);
+      printf("process_attr = .addr = %p, .stacksize = %d\n",
+             process_attr.stackaddr, process_attr.stacksize);
+    }
+    break;
+  }
+}
+
+void pthread_exit(void *) {}
+
+int pthread_join(pthread_t, void **) {}

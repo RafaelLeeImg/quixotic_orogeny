@@ -22,7 +22,7 @@ typedef enum {
 typedef struct {
   unsigned int pid;
   unsigned int pc;
-  unsigned int sp;
+  void *sp;
   int priority;
   process_memory_t memory_info;
   int ppid; // parent_pid

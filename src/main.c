@@ -78,24 +78,24 @@ int main(void) {
 
   // extern const unsigned char *heap_start;
   // extern const unsigned char *heap_end;
-  // pthread_attr_t attr0;
-  // pthread_attr_init(&attr0);
+  pthread_attr_t attr0;
+  pthread_attr_init(&attr0);
   // pthread_attr_setstack(&attr0, heap_start, 512);
 
-  // pthread_attr_t attr1;
-  // pthread_attr_init(&attr1);
+  pthread_attr_t attr1;
+  pthread_attr_init(&attr1);
   // pthread_attr_setstack(&attr1, heap_start + 512, 512);
 
-  // pthread_t pid0 = 1;
-  // pthread_t pid1 = 2;
+  pthread_t pid0 = 1;
+  pthread_t pid1 = 2;
 
   extern unsigned char placeholder[];
   printf("placeholder = %p\n", placeholder);
   extern unsigned char *heap_start;
   printf("heap_start = %p\n", heap_start);
 
-  // pthread_create(pid0, &attr0, process_0, 0);
-  // pthread_create(pid1, &attr1, process_1, 0);
+  pthread_create(pid0, &attr0, process_0, 0);
+  pthread_create(pid1, &attr1, process_1, 0);
 
   // // pthread_create(pid0,attr0,process_0,NULL);
 

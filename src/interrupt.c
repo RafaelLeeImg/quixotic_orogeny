@@ -21,6 +21,7 @@ void sys_tick_handler(void) {
     // printf(".");
     if ((systick_cnt % 1000) == 0) {
       // printf("\n");
+      scheduler();
     }
   }
 

@@ -1,47 +1,11 @@
 #ifndef __PTHREAD_H__
 #define __PTHREAD_H__
+#include "sched.h" // accoriding to POSIX
 #include "stdint.h"
 #include "sys/types.h"
-
-typedef struct {
-  unsigned int low_limit;
-  unsigned int high_limit;
-} process_memory_t;
-
-typedef enum {
-  PROCESS_STATE_CREATED = 0,
-  PROCESS_STATE_READY,
-  PROCESS_STATE_RUNNING,
-  PROCESS_STATE_BLOCKED,
-  PROCESS_STATE_WAITING,
-  PROCESS_STATE_SWAPPED_OUT_AND_WAITING,
-  PROCESS_STATE_SWAPPED_OUT_AND_BLOCKED,
-  PROCESS_STATE_end = 0x7FFFFFFF // make this enum 4 byte aligned
-} process_state_t;
-
-typedef struct {
-  unsigned int pid;
-  unsigned int pc;
-  void *sp;
-  int priority;
-  process_memory_t memory_info;
-  int ppid; // parent_pid
-  int signal_handlers;
-  int statistics;
-  process_state_t state;
-} process_control_block_t;
-
-typedef struct {
-  unsigned int pid;
-  unsigned int pc;
-  unsigned int sp;
-  int priority;
-  int memory_info;
-  int ppid; // parent_pid
-  int signal_handlers;
-  int statistics;
-  process_state_t state;
-} thread_control_block_t;
+#include "time.h" // accoriding to POSIX
+// Inclusion of the <pthread.h> header shall make symbols defined in the headers
+// <sched.h> and <time.h> visible.
 
 #define PTHREAD_BARRIER_SERIAL_THREAD 0
 #define PTHREAD_CANCEL_ASYNCHRONOUS 0

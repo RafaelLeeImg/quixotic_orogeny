@@ -65,4 +65,3 @@ void linker_script_info(void) {
   printf("__fini_array_start = 0x%X\n", __fini_array_start);
   printf("__fini_array_end = 0x%X\n", __fini_array_end);
 }
-

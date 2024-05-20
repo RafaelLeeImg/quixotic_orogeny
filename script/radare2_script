@@ -10,7 +10,12 @@ aaa
 afl
 
 db sym.main
-db sym.printf
+# db sym.printf
 # db stdio.c:152
-db 0x080005ae
+# db 0x080005ae
 # │ ─────└──> 0x080005ae      02f10409       add.w sb, r2, 4             ; stdio.c:152           int number = va_arg(arg_ptr, int);
+
+
+
+# debug using radare2
+# radare2 -B 0x8000000 -e dbg.exe.path=build/main.elf -e dbg.bpinmaps=false -i script/radare2_script -d gdb://127.0.0.1:1234

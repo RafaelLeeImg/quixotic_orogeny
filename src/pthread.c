@@ -3,8 +3,8 @@
 #include "os_define.h"
 #include "stdlib.h"
 
-process_control_block_t os_thresds[OS_MAX_PROCESS] = {0};
-pthread_attr_t os_thresd_attrs[OS_MAX_PROCESS] = {0};
+pthread_attr_t os_thresds[OS_MAX_PROCESS] = {0};
+// pthread_attr_t os_thresd_attrs[OS_MAX_PROCESS] = {0};
 
 int pthread_attr_init(pthread_attr_t *attr) {
   pthread_attr_setdetachstate(attr, 0);
@@ -153,9 +153,12 @@ int pthread_create(pthread_t *restrict thread,
       stackend = stackend - (stackend & 3);
       stacksize = stackend - (unsigned int)stackaddr;
       // printf("stacksize = 0x%08x\n", stacksize);
-      process_control_block_t pcb = os_thresds[i];
-      pthread_attr_t process_attr = os_thresd_attrs[i];
+      // process_control_block_t pcb = os_thresds[i];
+      pthread_attr_t process_attr = os_thresds[i];
       pthread_attr_setstack(&process_attr, stackaddr, stacksize);
+
+      process_attr.registers[REGISTER_SP] = stackend;
+
       printf("process_attr = .addr = %p, .stacksize = %d\n",
              process_attr.stackaddr, process_attr.stacksize);
     }

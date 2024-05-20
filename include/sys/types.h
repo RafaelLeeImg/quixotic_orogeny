@@ -35,8 +35,45 @@ typedef int nlink_t;
 typedef int off_t; // signed
 typedef int pid_t; // signed
 
+// not defined by POSIX
+typedef enum {
+  PROCESS_STATE_CREATED = 0,
+  PROCESS_STATE_READY,
+  PROCESS_STATE_RUNNING,
+  PROCESS_STATE_BLOCKED,
+  PROCESS_STATE_WAITING,
+  PROCESS_STATE_SWAPPED_OUT_AND_WAITING,
+  PROCESS_STATE_SWAPPED_OUT_AND_BLOCKED,
+  PROCESS_STATE_end = 0x7FFFFFFF // make this enum 4 byte aligned
+} process_state_t;
+
+enum {
+  REGISTER_R1 = 1,
+  REGISTER_R2 = 2,
+  REGISTER_R3 = 3,
+  REGISTER_R4 = 4,
+  REGISTER_R5 = 5,
+  REGISTER_R6 = 6,
+  REGISTER_R7 = 7,
+  REGISTER_R8 = 8,
+  REGISTER_R9 = 9,
+  REGISTER_R10 = 10,
+  REGISTER_R11 = 11,
+  REGISTER_R12 = 12,
+  REGISTER_SP = 13,
+  REGISTER_LR = 14,
+  REGISTER_PC = 15
+};
+
+// not defined by POSIX
+typedef struct {
+  unsigned int low_limit;
+  unsigned int high_limit;
+} process_memory_t;
+
 // defined according to POSIX Headers <sched.h>
 typedef struct {
+  // **** defined by POSIX
   int detachstate;
   size_t guardsize;
   int inheritsched;
@@ -45,6 +82,17 @@ typedef struct {
   int scope;
   void *stackaddr;
   size_t stacksize;
+
+  // **** not defined by POSIX
+  unsigned int pid;
+  // R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, SP, LR, PC, XPSR
+  unsigned int registers[17];
+  int priority;
+  // process_memory_t memory_info; // other than stack
+  int ppid; // parent_pid
+  int signal_handlers;
+  int statistics;
+  process_state_t state;
 } pthread_attr_t;
 
 typedef struct {

@@ -5,6 +5,8 @@
 // use a fixed size array to store thread information. insert them for
 // if there are task switching, use bubble sort to find the newest pointer
 
-process_control_block_t processes_control[OS_MAX_PROCESS] = {0};
+void scheduler(void);
 
-// scheduler shall run in
+// Keep MSP as it is, modify PSP
+// run all user space threads use PSP
+void scheduler(void) { printf("scheduler\n"); }

@@ -105,14 +105,18 @@ int main(void) {
   // extern lock1;
   extern volatile unsigned int systick_cnt;
   int locked = 0;
+  int last_time_run = 0;
   while (1) {
     // printf(".");
     if (systick_cnt % 500 == 10 /*  && systick_cnt <= 20 */) {
-      printf("t = %ud\n", systick_cnt);
-      pthread_mutex_init(&lock1, 0);
+      if (last_time_run != systick_cnt) {
+        printf("t = %u\n", systick_cnt);
+        pthread_mutex_init(&lock1, 0);
+        last_time_run = systick_cnt;
+      }
     } else if (systick_cnt % 500 == 200 /*  && systick_cnt <= 210 */) {
-      printf("t = %ud\n", systick_cnt);
-      if (1) {
+      if (last_time_run != systick_cnt) {
+        printf("t = %u\n", systick_cnt);
         // if (locked == 0) {
         print("200 before lock\n");
         // __clrex();
@@ -122,14 +126,19 @@ int main(void) {
         print("200 after lock\n");
         printf("lock1.locked_ = %d\n", lock1.locked_);
         locked = 1;
+        last_time_run = systick_cnt;
       }
     } else if (systick_cnt % 500 == 499 /*  && systick_cnt <= 410 */) {
-      printf("t = %ud\n", systick_cnt);
-      if (locked == 1) {
-        printf("499 before unlock\n");
-        pthread_mutex_unlock(&lock1);
-        printf("499 after unlock\n");
-        locked = 0;
+      if (last_time_run != systick_cnt) {
+        printf("t = %u\n", systick_cnt);
+
+        if (locked == 1) {
+          printf("499 before unlock\n");
+          pthread_mutex_unlock(&lock1);
+          printf("499 after unlock\n");
+          locked = 0;
+        }
+        last_time_run = systick_cnt;
       }
     }
   }

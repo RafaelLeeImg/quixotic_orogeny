@@ -62,9 +62,16 @@ int main(void) {
   test();
   extern memory_block_t *g_root;
   printf("g_root->next = %p\n", g_root->next);
-
+  debug_malloc();
   int *a = (int *)malloc(sizeof(int));
+  printf("a = %p\n", a);
+  assert(g_root >= (void *)0x20000000); // error, it shall not be zero
+  assert(g_root <= (void *)0x20020000); // error, it shall not be zero
+  debug_malloc();
   free(a);
+  a = (void *)0;
+  debug_malloc();
+  assert(g_root == (void *)0);
 
   // extern const unsigned char *heap_start;
   // extern const unsigned char *heap_end;

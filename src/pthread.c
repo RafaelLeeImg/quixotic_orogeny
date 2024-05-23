@@ -3,7 +3,7 @@
 #include "os_define.h"
 #include "stdlib.h"
 
-pthread_attr_t os_thresds[OS_MAX_PROCESS] = {0};
+pthread_attr_t os_threads[OS_MAX_PROCESS] = {0};
 // pthread_attr_t os_thresd_attrs[OS_MAX_PROCESS] = {0};
 
 int pthread_attr_init(pthread_attr_t *attr) {
@@ -141,11 +141,17 @@ int pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize) {
   return 0;
 }
 
+typedef struct {
+  uint32_t *stack_pointer;
+} TCB;
+
+extern TCB task_list[OS_MAX_PROCESS];
+
 int pthread_create(pthread_t *restrict thread,
                    const pthread_attr_t *restrict attr,
                    void *(*start_routine)(void *), void *restrict arg) {
   for (int i = 0; i < OS_MAX_PROCESS; i++) {
-    if (os_thresds[i].pid == 0) {
+    if (os_threads[i].stackaddr == (void *)0) { // this element is empty
       unsigned char *stackaddr = (void *)malloc(PROCESS_MEMORY);
       size_t stacksize = 0;
       unsigned int stackend = stackaddr + PROCESS_MEMORY;
@@ -153,16 +159,17 @@ int pthread_create(pthread_t *restrict thread,
       stackend = stackend - (stackend & 3);
       stacksize = stackend - (unsigned int)stackaddr;
       // printf("stacksize = 0x%08x\n", stacksize);
-      // process_control_block_t pcb = os_thresds[i];
-      pthread_attr_t process_attr = os_thresds[i];
-      pthread_attr_setstack(&process_attr, stackaddr, stacksize);
+      // process_control_block_t pcb = os_threads[i];
+      pthread_attr_t *process_attr = &(os_threads[i]);
+      pthread_attr_setstack(process_attr, stackaddr, stacksize);
 
-      process_attr.registers[REGISTER_SP] = stackend;
+      process_attr->registers[REGISTER_SP] = stackend;
 
       printf("process_attr = .addr = %p, .stacksize = %d\n",
-             process_attr.stackaddr, process_attr.stacksize);
+             process_attr->stackaddr, process_attr->stacksize);
+      task_list[i].stack_pointer = (uint32_t *)stackend - 32;
+      break;
     }
-    break;
   }
 }
 

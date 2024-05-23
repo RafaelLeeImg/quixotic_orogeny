@@ -38,7 +38,22 @@ extern funcp_t __preinit_array_start, __preinit_array_end;
 extern funcp_t __init_array_start, __init_array_end;
 extern funcp_t __fini_array_start, __fini_array_end;
 
+// 46:#define SCB_ICSR MMIO32(SCB_BASE + 0x04)
+// 66:#define SCB_BASE (SCS_BASE + 0x0D00)
+// 42:#define SCS_BASE (PPBI_BASE + 0xE000)
+// 26:#define PPBI_BASE (0xE0000000U)
+
+// 46:#define SCB_ICSR MMIO32(SCB_BASE + 0x04)
+// 66:#define SCB_BASE (SCS_BASE + 0x0D00)
+// 42:#define SCS_BASE (PPBI_BASE + 0xE000)
+// 26:#define PPBI_BASE (0xE0000000U)
+
+// 0xE0000000U+ 0x0D00 + 0xE000 + 0x04
+
 void blocking_handler(void) {
+  unsigned int *p = (unsigned int *)SCB_ICSR;
+  p = (unsigned int *)0xe000ed04;
+  printf("entering blocking_handler, SCB_ICSR = 0x%x\n", *p);
   while (1)
     ;
 }

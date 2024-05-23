@@ -12,7 +12,8 @@ gef-remote localhost 1234
 
 # b sys_tick_handler
 b main
-b main.c:179
+b scheduler
+# b main.c:179
 # b malloc
 # b malloc_available_size
 # b free

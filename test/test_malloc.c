@@ -51,4 +51,10 @@ void test_malloc(void) {
     }
   }
   printf("after 2nd malloc\n");
+  for (int i = 0; i < 10; i++) {
+    free(a[i]);
+  }
+  printf("before 2nd free\n");
+  debug_malloc();
+  printf("after 2nd free\n");
 }

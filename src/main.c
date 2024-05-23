@@ -60,21 +60,11 @@ int main(void) {
   // printf("test printf_str =  %s\n", hello_world);
   // printf("aisioa = %d\n", 1891289);
   test();
-  systick_setup();
-
-  printf("cm_enable_interrupts\n");
-  cm_enable_interrupts();
-
-  printf("cm_enable_faults\n");
-  cm_enable_faults();
-
-  printf("console_setup\n");
-  console_setup();
-
-  printf("After console setup\n");
-
   extern memory_block_t *g_root;
   printf("g_root->next = %p\n", g_root->next);
+
+  int *a = (int *)malloc(sizeof(int));
+  free(a);
 
   // extern const unsigned char *heap_start;
   // extern const unsigned char *heap_end;
@@ -93,6 +83,19 @@ int main(void) {
   printf("placeholder = %p\n", placeholder);
   extern unsigned char *heap_start;
   printf("heap_start = %p\n", heap_start);
+
+  systick_setup();
+
+  printf("cm_enable_interrupts\n");
+  cm_enable_interrupts();
+
+  printf("cm_enable_faults\n");
+  cm_enable_faults();
+
+  printf("console_setup\n");
+  console_setup();
+
+  printf("After console setup\n");
 
   pthread_create(pid0, &attr0, process_0, 0);
   pthread_create(pid1, &attr1, process_1, 0);

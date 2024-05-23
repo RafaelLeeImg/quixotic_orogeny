@@ -10,6 +10,10 @@ aaa
 afl
 
 db sym.main
+db sym.scheduler
+db 0x080008a8
+
+
 # db sym.printf
 # db stdio.c:152
 # db 0x080005ae

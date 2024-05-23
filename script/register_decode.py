@@ -18,7 +18,7 @@ def convert_int(s):
 def list_sum(v):  # like: [1,0,1,0]
     sum = 0
     for i in range(len(v)):
-        sum = sum*2+v[i]
+        sum = sum * 2 + v[i]
     return sum
 
 
